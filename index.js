@@ -1,9 +1,11 @@
-const express = require('express')
-const uuid = require('uuid')
+const express = require ('express')
+const uuid = require ('uuid')
+const cors = require('cors');
 
-const port = 3000
-const app = express()
-app.use(express.json())
+const port = 3001;
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 
 const users = []
@@ -11,7 +13,7 @@ const users = []
 const checkUserId = (request, response, next) => {
      const { id } = request.params
 
-     const index = users.findIndex(user => user.id === id)
+     const index = users.findIndex((user) => user.id === id)
 
      if (index < 0) {
           return response.status(404).json({ error: "User not Found" })
@@ -37,7 +39,7 @@ app.post('/users', (request, response) => {
 
      users.push(user)
 
-     return response.status(201).json(users)
+     return response.status(201).json(user)
 
 })
 
@@ -62,6 +64,6 @@ app.delete('/users/:id',checkUserId, (request, response) => {
      return response.status(204).json()
 })
 
-app.listen(3000, () => {
-     console.log('😜 Server started on port 3000!')
-})
+app.listen(port, () => {
+     console.log(`😜 Server started on port ${port}`);
+});
